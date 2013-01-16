@@ -48,11 +48,11 @@
 		offsetX = 0,
 		offsetY = 0,
 		canvasMarginLeft = 0,
-		canvasMarginRight = 0;
+		canvasMarginTop = 0;
 
 	view = { 
 		DRAW_AREA_WIDTH: 1024,
-		DRAW_AREA_HEIGHT: 720,
+		DRAW_AREA_HEIGHT: 768,
 		GAME_PLAY_WIDTH: 800,
 		GAME_PLAY_HEIGHT: 600
 	};
@@ -62,7 +62,7 @@
 	}
 	
 	view.getY = function(e) {
-		return (e.pageY - canvasMarginRight - offsetY) / scale;
+		return (e.pageY - canvasMarginTop - offsetY) / scale;
 	}
 
   // layerIndex is optional and degfaults to 0
