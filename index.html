@@ -29,16 +29,17 @@
     $(function() {
       var groundHeight = view.DRAW_AREA_HEIGHT / 2,
       pepperImage = new Image(),
-      pc = { },
-      floor = { },
-      background = { },
-      MOVE_SPEED = 0.1,   // pixels per millisecond
+      pc = { layerIndex: 1 },
+      floor = { layerIndex: 0},
+      background = { layerIndex: 0 },
+      MOVE_SPEED = 0.3,   // pixels per millisecond
       SNAP_DISTANCE = 2,  // pixels
       MIN_X = (view.DRAW_AREA_WIDTH - view.GAME_PLAY_WIDTH) / 2,
       MAX_X = view.DRAW_AREA_WIDTH - MIN_X;
       
       view.addDrawable(
         {
+          layerIndex: 1,
           draw: function(dt, ctx) {
             ctx.font = 'bold 14px sans-serif';
             ctx.fillStyle = "#000000";
@@ -49,8 +50,7 @@
             ctx.fillText('The system tries to render as much of the green area as possible without further reducing the scale.', MIN_X, 270);
             ctx.fillText('Click on the screen to move the pepper; it will not leave the game play area.', MIN_X, 300);
           }
-        },
-        1, 2000);
+        });
         
       // Construct a test background object.
       // This would normally be an image.
@@ -67,7 +67,7 @@
           (view.DRAW_AREA_WIDTH - view.GAME_PLAY_WIDTH) / 2, 
           (view.DRAW_AREA_HEIGHT - view.GAME_PLAY_HEIGHT) / 2, 
           view.GAME_PLAY_WIDTH,
-          view.GAME_PLAY_HEIGHT);     
+          view.GAME_PLAY_HEIGHT);
         background.draw = function(dt, ctx) {
           ctx.drawImage(background.image, 0, 0);
         };
@@ -105,9 +105,10 @@
         ctx.restore();
       };
     
-      view.addDrawable(pc, 1);
-      view.addDrawable(floor);  // default layer is 0
-      
+      view.addDrawable(floor);
+
+      // Move the pc to the x coordinate of the mouse click point.
+      // Stay within the game play area.      
       $(document).click(function(e) {
         var x = view.getX(e);
         if (x < MIN_X + 16) {
@@ -118,7 +119,7 @@
           pc.destX = x;
         }
       });
-      
+
     });
   </script>
 </body>
